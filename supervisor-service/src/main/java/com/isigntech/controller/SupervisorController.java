@@ -1,5 +1,6 @@
 package com.isigntech.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.isigntech.dto.EmployeeSalariesDTO;
 import com.isigntech.dto.ExpenseDTO;
 import com.isigntech.dto.ExpenseDetailsDTO;
+import com.isigntech.entity.CategoryType;
+import com.isigntech.entity.Expense;
 import com.isigntech.service.EmployeeSalariesService;
 import com.isigntech.service.ExpenseDetailsService;
 import com.isigntech.service.ExpenseService;
@@ -34,7 +39,22 @@ public class SupervisorController {
 
     // Expense endpoints
     @PostMapping("/expenses")
-    public ResponseEntity<ExpenseDTO> createExpense(@RequestBody ExpenseDTO expenseDTO) {
+    public ResponseEntity<ExpenseDTO> createExpense(
+            @RequestParam("purchaseDate") Date purchaseDate,
+            @RequestParam("storeName") String storeName,
+            @RequestParam("categoryType") CategoryType categoryType,
+            @RequestParam("receiptAttached") boolean receiptAttached,
+            @RequestParam("receiptReason") String receiptReason,
+            @RequestParam("receiptFile") MultipartFile receiptFile) {
+
+        ExpenseDTO expenseDTO = new ExpenseDTO();
+        expenseDTO.setPurchaseDate(purchaseDate);
+        expenseDTO.setStoreName(storeName);
+        expenseDTO.setCategoryType(categoryType);
+        expenseDTO.setReceiptAttached(receiptAttached);
+        expenseDTO.setReceiptReason(receiptReason);
+        expenseDTO.setReceiptFile(receiptFile);
+
         return ResponseEntity.ok(expenseService.createExpense(expenseDTO));
     }
 

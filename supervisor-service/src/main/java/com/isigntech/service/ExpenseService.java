@@ -22,8 +22,17 @@ public class ExpenseService {
 
     public ExpenseDTO createExpense(ExpenseDTO expenseDTO) {
         Expense expense = modelMapper.map(expenseDTO, Expense.class);
-        expense = expenseRepository.save(expense);
-        return modelMapper.map(expense, ExpenseDTO.class);
+
+        if (expenseDTO.isReceiptAttached() && expenseDTO.getReceiptFile() != null) {
+            try {
+                expense.setReceiptFile(expenseDTO.getReceiptFile().getBytes());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        Expense savedExpense = expenseRepository.save(expense);
+        return modelMapper.map(savedExpense, ExpenseDTO.class);
     }
 
     public List<ExpenseDTO> getAllExpenses() {
