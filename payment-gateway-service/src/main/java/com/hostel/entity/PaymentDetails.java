@@ -15,4 +15,5 @@ public class PaymentDetails extends BaseModel{
     private String PaymentLink;
     @Enumerated(EnumType.STRING)
     private PaymentStatus status;
+    private int amount;
 }
