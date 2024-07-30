@@ -26,5 +26,6 @@ public class UserDetailsResponseDto {
 	double paidAmount;
 	double pendingAmount;
 	double advancePayment;
+	String hostelName;
 
 }

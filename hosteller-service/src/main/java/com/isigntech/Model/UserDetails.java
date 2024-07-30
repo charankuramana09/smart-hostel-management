@@ -38,5 +38,6 @@ public class UserDetails {
 	double paidAmount;
 	double pendingAmount;
 	double advancePayment;
+	String hostelName;
 
 }
