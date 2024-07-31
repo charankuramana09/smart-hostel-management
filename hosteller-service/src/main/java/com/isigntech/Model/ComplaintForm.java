@@ -1,10 +1,7 @@
 package com.isigntech.Model;
 
 import java.sql.Time;
-import java.time.LocalDateTime;
 import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

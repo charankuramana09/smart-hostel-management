@@ -7,5 +7,7 @@ public interface ComplaintFormService {
 	public ComplaintFormResponseDTO raiseComplaint(ComplaintFormResponseDTO complaintFormResponseDTO);
 	
 	public ComplaintFormResponseDTO getById(long complaintId);
+	
+	 ComplaintFormResponseDTO updateUserComplaint(ComplaintFormResponseDTO complaintFormResponseDTO, long complaintId);
 
 }

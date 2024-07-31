@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,6 +36,19 @@ public class ComplaintFormController {
 		
 		return new ResponseEntity<ComplaintFormResponseDTO>(complaintFormService.getById(complaintId), HttpStatus.OK);
 	}
+ 
+	
+	   @PutMapping("/update/{complaintId}")
+	    public ResponseEntity<ComplaintFormResponseDTO> updateComplaintForm(
+	            @RequestParam("complaintForm") String complaintFormResponseDTO,
+//	            @RequestParam("file") MultipartFile file,
+	            @PathVariable long complaintId) throws Exception, IOException {
 
+	        ComplaintFormResponseDTO formResponseDTO = new ObjectMapper().readValue(complaintFormResponseDTO, ComplaintFormResponseDTO.class);
+//	        formResponseDTO.setSupportingDocument(file.getBytes());
+
+	        ComplaintFormResponseDTO updatedFormResponseDTO = complaintFormService.updateUserComplaint(formResponseDTO, complaintId);
+	        return new ResponseEntity<>(updatedFormResponseDTO, HttpStatus.OK);
+	    }
 	
 }

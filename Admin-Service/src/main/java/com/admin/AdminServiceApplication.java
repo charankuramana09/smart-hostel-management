@@ -2,9 +2,8 @@ package com.admin;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.client.RestTemplate;
-
+import org.springframework.context.annotation.ComponentScan;
+@ComponentScan(basePackages = "com.admin")
 @SpringBootApplication
 public class AdminServiceApplication {
 
