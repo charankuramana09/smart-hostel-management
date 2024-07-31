@@ -1,4 +1,4 @@
-package com.admin.service;
+package com.admin.service.impl;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.admin.entity.UserDetails;
 import com.admin.repository.AdminRepository;
+import com.admin.service.AdminService;
 
 
 @Service

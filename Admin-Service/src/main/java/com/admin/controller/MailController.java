@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.admin.dto.MailRequestEmail;
-import com.admin.service.MailService;
+import com.admin.service.impl.MailService;
 
 import jakarta.mail.MessagingException;
 
