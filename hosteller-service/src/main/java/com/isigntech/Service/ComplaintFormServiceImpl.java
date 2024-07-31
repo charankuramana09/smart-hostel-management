@@ -36,6 +36,34 @@ public class ComplaintFormServiceImpl implements ComplaintFormService {
 	ComplaintFormResponseDTO complaintFormResponseDTO = modelMapper.map(complaintForm, ComplaintFormResponseDTO.class);
 		return complaintFormResponseDTO;
 	}
+
+	@Override
+	 public ComplaintFormResponseDTO updateUserComplaint(ComplaintFormResponseDTO complaintFormResponseDTO, long complaintId) {
+        ComplaintForm updateComplaintForm = complaintFormRepository.findById(complaintId)
+                .orElseThrow(() -> new RuntimeException("ComplaintForm not found"));
+
+      
+
+        // Update the fields
+//        updateComplaintForm.setFirstName(complaintFormResponseDTO.getFirstName());
+//        updateComplaintForm.setLastName(complaintFormResponseDTO.getLastName());
+//        updateComplaintForm.setContactNumber(complaintFormResponseDTO.getContactNumber());
+//        updateComplaintForm.setEmail(complaintFormResponseDTO.getEmail());
+//        updateComplaintForm.setDate(complaintFormResponseDTO.getDate());
+//        updateComplaintForm.setTime(complaintFormResponseDTO.getTime());
+//        updateComplaintForm.setRoomNumber(complaintFormResponseDTO.getRoomNumber());
+//        updateComplaintForm.setDescription(complaintFormResponseDTO.getDescription());
+//        updateComplaintForm.setAction(complaintFormResponseDTO.getAction());
+//        updateComplaintForm.setTypeComplaint(complaintFormResponseDTO.getTypeComplaint());
+//        updateComplaintForm.setSupportingDocument(complaintFormResponseDTO.getSupportingDocument());
+//        updateComplaintForm.setWhoInvolvedInTheIncident(complaintFormResponseDTO.getWhoInvolvedInTheIncident());
+        updateComplaintForm.setStatus(complaintFormResponseDTO.getStatus());
+
+        ComplaintForm updatedForm = complaintFormRepository.save(updateComplaintForm);
+        ComplaintFormResponseDTO formResponseDTO = modelMapper.map(updatedForm, ComplaintFormResponseDTO.class);
+
+        return formResponseDTO;
+    }
 	
 	
 
