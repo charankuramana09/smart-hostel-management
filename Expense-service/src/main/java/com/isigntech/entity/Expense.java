@@ -40,6 +40,7 @@ public class Expense {
 
     @Column(name = "unit_price")
     private Double unitPrice;
+    
     @Column(name = "total_amount")
     private Double totalAmount;
 
