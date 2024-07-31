@@ -21,7 +21,8 @@ public class UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	long userId;
-	String fullName;
+	String firstName;
+	String lastName;
 	String gender;
 	Date joiningDate;
 	String purpose;
@@ -32,12 +33,15 @@ public class UserDetails {
 	long alternateMobileNumber;
 	String email;
 	@Lob
-	@Column(name = "id_proof", columnDefinition = "BLOB")
+	@Column(name = "id_proof", columnDefinition = "LONGBLOB")
 	byte[] idProof;
 	boolean status;
 	double paidAmount;
 	double pendingAmount;
 	double advancePayment;
 	String hostelName;
+	Date paymentETA;
+	int roomNumber;
+	String roomType;
 
 }

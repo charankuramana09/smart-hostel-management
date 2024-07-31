@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,6 +45,20 @@ public class UserDetailsController {
 		return new ResponseEntity<List<UserDetailsResponseDto>>(userDetailsService.findAllUsers(userDetailsResponseDto),HttpStatus.OK);
 	}
 	
+	
+	 @PutMapping("/update{userId}")
+	    public ResponseEntity<UserDetailsResponseDto> updateUser(
+	            @RequestParam("userDetails") String userDetailsResponseDto,
+	            @RequestParam("file") MultipartFile file,
+	            @RequestParam("userId") Long userId) throws IOException {
+
+	        ObjectMapper objectMapper = new ObjectMapper();
+	        UserDetailsResponseDto value = objectMapper.readValue(userDetailsResponseDto, UserDetailsResponseDto.class);
+	        value.setIdProof(file.getBytes());
+
+	        UserDetailsResponseDto updatedUserDetails = userDetailsService.updateUserDetails(value, userId);
+	        return new ResponseEntity<>(updatedUserDetails, HttpStatus.OK);
+	    }
 	
 
 

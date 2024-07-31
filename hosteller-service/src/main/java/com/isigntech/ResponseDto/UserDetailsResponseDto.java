@@ -2,16 +2,14 @@ package com.isigntech.ResponseDto;
 
 import java.util.Date;
 
-import com.isigntech.Model.UserDetails;
-
-import jakarta.persistence.Lob;
 import lombok.Data;
 
 @Data
 public class UserDetailsResponseDto {
 
 	long userId;
-	String fullName;
+	String firstName;
+	String lastName;
 	String gender;
 	Date joiningDate;
 	String purpose;
@@ -21,11 +19,15 @@ public class UserDetailsResponseDto {
 	long mobileNumber;
 	long alternateMobileNumber;
 	String email;
+	
 	byte[] idProof;
 	boolean status;
 	double paidAmount;
 	double pendingAmount;
 	double advancePayment;
 	String hostelName;
+	Date paymentETA;
+	int roomNumber;
+	String roomType;
 
 }

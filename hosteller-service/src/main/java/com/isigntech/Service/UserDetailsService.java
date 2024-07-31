@@ -11,5 +11,9 @@ public interface UserDetailsService {
    public UserDetailsResponseDto getById(long userId);
    
    public List<UserDetailsResponseDto> findAllUsers(UserDetailsResponseDto userDetailsResponseDto);
+   
+   public UserDetailsResponseDto updateUserDetails(UserDetailsResponseDto userDetailsResponseDto, long userId) ;
+	   
+   
 
 }
