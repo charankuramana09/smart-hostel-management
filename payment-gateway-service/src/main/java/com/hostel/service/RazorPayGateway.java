@@ -13,15 +13,18 @@ import com.razorpay.PaymentLink;
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class RazorPayGateway implements PaymentGateway {
 
     private final RazorpayClient razorpayClient;
 
-    @Autowired
-    public RazorPayGateway(RazorpayClient razorpayClient) {
-        this.razorpayClient = razorpayClient;
-    }
+//    @Autowired
+//    public RazorPayGateway(RazorpayClient razorpayClient) {
+//        this.razorpayClient = razorpayClient;
+//    }
 
     @Override
     public String createPaymentLink(PaymentLinkRequestDto paymentLinkRequestDto) {
@@ -29,11 +32,11 @@ public class RazorPayGateway implements PaymentGateway {
         paymentLinkRequest.put("amount", paymentLinkRequestDto.getAmount());
         paymentLinkRequest.put("currency", "INR");
         paymentLinkRequest.put("expire_by", LocalDate.now().plusDays(7).atStartOfDay(ZoneId.systemDefault()).toEpochSecond());
-        paymentLinkRequest.put("reference_id", paymentLinkRequestDto.getOrderId());
-        paymentLinkRequest.put("description", "Payment for order no " + paymentLinkRequestDto.getOrderId());
+        paymentLinkRequest.put("reference_id", paymentLinkRequestDto.getUserId());
+        paymentLinkRequest.put("description", "Payment for order no " + paymentLinkRequestDto.getUserId());
 
         JSONObject customer = new JSONObject();
-        customer.put("name", paymentLinkRequestDto.getCustomerName());
+        customer.put("name", paymentLinkRequestDto.getUserName());
         customer.put("contact", paymentLinkRequestDto.getPhone());
         customer.put("email", "geekysanjay@gmail.com");
         paymentLinkRequest.put("customer", customer);
@@ -53,7 +56,7 @@ public class RazorPayGateway implements PaymentGateway {
     }
 
     @Override
-    public PaymentStatus getStatus(String paymentId, String orderId) {
+    public PaymentStatus getStatus(String paymentId, String userId) {
         try {
             Payment payment = razorpayClient.payments.fetch(paymentId);
             String statusType = payment.get("status");

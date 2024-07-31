@@ -9,5 +9,5 @@ import com.hostel.entity.PaymentDetails;
 
 @Repository
 public interface PaymentRepository extends JpaRepository<PaymentDetails,Long> {
-    Optional<PaymentDetails> findByOrderId(String orderId);
+    Optional<PaymentDetails> findByUserId(String userId);
 }

@@ -8,5 +8,5 @@ import com.hostel.entity.PaymentStatus;
 @Component
 public interface PaymentGateway {
     String createPaymentLink(PaymentLinkRequestDto paymentLinkRequestDto);
-    PaymentStatus getStatus(String paymentId, String orderId);
+    PaymentStatus getStatus(String paymentId, String userId);
 }
