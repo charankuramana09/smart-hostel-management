@@ -27,15 +27,12 @@ public class MailService {
 //	}
 	
 	public void mail( String email, String name, File attachment ) throws MessagingException {
-		
 		sendConfirmationEmail(email,name, attachment);
 	}
 	
 
 	
    public void sendConfirmationEmail(String email, String name, File attachment) throws MessagingException {
-	   
-	   
 	   // It will be working only Text..
 //	   SimpleMailMessage message = new SimpleMailMessage();
 //	   message.setTo(email);
@@ -54,6 +51,17 @@ public class MailService {
        FileSystemResource file = new FileSystemResource(attachment);
        helper.addAttachment(file.getFilename(), file);
 
+       mailSender.send(message);
+	   
+   }
+   
+   public void sendSuccessEmail(String email, String name) throws MessagingException {
+	 
+	   MimeMessage message = mailSender.createMimeMessage();
+       MimeMessageHelper helper = new MimeMessageHelper(message, true);
+       helper.setTo(email);
+       helper.setSubject("Your registration is SuccessFull");
+       helper.setText("Hii "+name+" \n your registration has been completed Suceessfully... ");
        mailSender.send(message);
 	   
    }

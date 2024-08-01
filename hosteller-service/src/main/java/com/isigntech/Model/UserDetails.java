@@ -20,28 +20,28 @@ public class UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	long userId;
-	String firstName;
-	String lastName;
-	String gender;
-	Date joiningDate;
-	String purpose;
-	String roomSharing;
-	String frequency;
-	String userType;
-	long mobileNumber;
-	long alternateMobileNumber;
-	String email;
+	private long userId;
+	private String firstName;
+	private String lastName;
+	private String gender;
+	private Date joiningDate;
+	private String purpose;
+	private String roomSharing;
+	private String frequency;
+	private String userType;
+	private long mobileNumber;
+	private long alternateMobileNumber;
+	private String email;
 	@Lob
 	@Column(name = "id_proof", columnDefinition = "LONGBLOB")
-	byte[] idProof;
-	boolean status;
-	double paidAmount;
-	double pendingAmount;
-	double advancePayment;
-	String hostelName;
-	Date paymentETA;
-	int roomNumber;
-	String roomType;
+	private byte[] idProof;
+	private boolean status;
+	private double paidAmount;
+	private double pendingAmount;
+	private double advancePayment;
+	private String hostelName;
+	private Date paymentETA;
+	private int roomNumber;
+	private String roomType;
 
 }

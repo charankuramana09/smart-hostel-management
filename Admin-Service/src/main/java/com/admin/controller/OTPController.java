@@ -2,9 +2,11 @@ package com.admin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.admin.exception.OtpMissMatchException;
 import com.admin.service.impl.OTPService;
 import com.admin.service.impl.OTPStorageService;
 import com.admin.util.OTPUtil;
@@ -12,6 +14,7 @@ import com.admin.util.OTPUtil;
 import jakarta.mail.MessagingException;
 
 @RestController
+@RequestMapping("/otp")
 public class OTPController {
 	
 
@@ -43,7 +46,7 @@ public class OTPController {
             otpStorageService.removeOTP(email);
             return "OTP validated successfully";
         } else {
-            return "Invalid OTP";
+           throw new OtpMissMatchException("Otp is Not Valid");
         }
     }
 

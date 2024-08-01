@@ -36,7 +36,9 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().requestMatchers("/admin/all","/admin/filter","/admin/update/{userId}")
+		http.csrf().disable().authorizeRequests()
+		.requestMatchers("/email/signupSuccessEmail","/otp/**").permitAll()
+		.requestMatchers("/admin/all","/admin/filter","/admin/update/{userId}")
 				.hasAnyRole(Authorities.ADMIN.name(), Authorities.SUPERVISOR.name(), Authorities.SUPERADMIN.name())
 				.anyRequest()
 				.authenticated()
