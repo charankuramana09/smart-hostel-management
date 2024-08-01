@@ -18,32 +18,32 @@ import com.isigntech.dto.EmployeeSalariesDto;
 import com.isigntech.service.EmployeeSalariesService;
 
 @RestController
-@RequestMapping("/api/employee")
+@RequestMapping("/employee")
 @CrossOrigin(origins ="/*")
 public class EmployeeSalariesController {
 
     @Autowired
     private EmployeeSalariesService employeeSalariesService;
 
-    @PostMapping
+    @PostMapping("/createEmployee")
     public ResponseEntity<EmployeeSalariesDto> createEmployeeSalaries(@RequestBody EmployeeSalariesDto employeeSalariesDto) {
         EmployeeSalariesDto createdEmployeeSalaries = employeeSalariesService.createEmployeeSalaries(employeeSalariesDto);
         return ResponseEntity.ok(createdEmployeeSalaries);
     }
 
-    @GetMapping("/{empId}")
+    @GetMapping("getEmpById/{empId}")
     public ResponseEntity<EmployeeSalariesDto> getEmployeeSalariesById(@PathVariable Long empId) {
         EmployeeSalariesDto employeeSalaries = employeeSalariesService.getEmployeeSalariesById(empId);
         return ResponseEntity.ok(employeeSalaries);
     }
 
-    @GetMapping
+    @GetMapping("getAll")
     public ResponseEntity<List<EmployeeSalariesDto>> getAllEmployeeSalaries() {
         List<EmployeeSalariesDto> employeeSalaries = employeeSalariesService.getAllEmployeeSalaries();
         return ResponseEntity.ok(employeeSalaries);
     }
 
-    @PutMapping("/{empId}")
+    @PutMapping("/update/{empId}")
     public ResponseEntity<EmployeeSalariesDto> updateEmployeeSalaries(@PathVariable Long empId, @RequestBody EmployeeSalariesDto employeeSalariesDto) {
         EmployeeSalariesDto updatedEmployeeSalaries = employeeSalariesService.updateEmployeeSalaries(empId, employeeSalariesDto);
         return ResponseEntity.ok(updatedEmployeeSalaries);
