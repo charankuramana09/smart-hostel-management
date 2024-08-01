@@ -28,15 +28,14 @@ public class ComplaintForm {
 
 	private Date date;
 	private Time time;
-	int roomNumber;
 	String description;
 	String action;
 	String typeComplaint;
 	@Lob
 	@Column(name = "supporting_Document", columnDefinition = "LONGBLOB")
 	byte[] supportingDocument;
-	String whoInvolvedInTheIncident;
-
+	String othersInvolved;
+    String location;
 	Status status;
 
 }

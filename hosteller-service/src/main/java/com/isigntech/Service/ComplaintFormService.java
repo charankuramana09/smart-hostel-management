@@ -8,6 +8,5 @@ public interface ComplaintFormService {
 	
 	public ComplaintFormResponseDTO getById(long complaintId);
 	
-	 ComplaintFormResponseDTO updateUserComplaint(ComplaintFormResponseDTO complaintFormResponseDTO, long complaintId);
-
+	
 }

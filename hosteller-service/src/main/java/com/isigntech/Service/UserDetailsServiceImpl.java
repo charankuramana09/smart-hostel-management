@@ -39,19 +39,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		return userDetailsResponseDto;
 	}
 
-	@Override
-	public List<UserDetailsResponseDto> findAllUsers(UserDetailsResponseDto userDetailsResponseDto) {
-
-		List<UserDetails> userDetails = userDetailsRepository.findAll();
-		List<UserDetailsResponseDto> detailsResponseDtos = new ArrayList<>();
-
-		for (UserDetails student : userDetails) {
-			UserDetailsResponseDto userDto = modelMapper.map(student, UserDetailsResponseDto.class);
-			detailsResponseDtos.add(userDto);
-		}
-
-		return detailsResponseDtos;
-	}
 
 	public UserDetailsResponseDto updateUserDetails(UserDetailsResponseDto userDetailsResponseDto, long userId) {
         // Fetch existing user details

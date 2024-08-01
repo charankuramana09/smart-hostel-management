@@ -14,17 +14,14 @@ public class ComplaintFormResponseDTO {
 	String lastName;
 	long contactNumber;
 	String email;
-
 	private Date date;
 	private Time time;
-	int roomNumber;
 	String description;
 	String action;
 	String typeComplaint;
-	
 	byte[] supportingDocument;
-	String whoInvolvedInTheIncident;
-
+	String othersInvolved;
+    String location;
 	Status status;
 
 	
