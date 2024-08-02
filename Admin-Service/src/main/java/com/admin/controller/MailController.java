@@ -39,7 +39,7 @@ public class MailController {
             File convFile = new File(System.getProperty("java.io.tmpdir") + "/" + file.getOriginalFilename());
             file.transferTo(convFile);
             
-			mailService.mail(email ,name, convFile);
+			mailService.sendInvioceMail(email ,name, convFile);
 			return "Email sent successfully";
 		} catch (MessagingException e) {
 			e.printStackTrace();

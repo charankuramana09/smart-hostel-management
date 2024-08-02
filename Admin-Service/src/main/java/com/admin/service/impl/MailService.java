@@ -26,34 +26,21 @@ public class MailService {
 //		sendConfirmationEmail(req.getEmail(),req.getName(), attachment);
 //	}
 	
-	public void mail( String email, String name, File attachment ) throws MessagingException {
-		sendConfirmationEmail(email,name, attachment);
-	}
-	
+	public void sendInvioceMail(String email, String name, File attachment) throws MessagingException {
+		   MimeMessage message = mailSender.createMimeMessage();
+	       MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-	
-   public void sendConfirmationEmail(String email, String name, File attachment) throws MessagingException {
-	   // It will be working only Text..
-//	   SimpleMailMessage message = new SimpleMailMessage();
-//	   message.setTo(email);
-//	   message.setSubject(name);
-//	   message.setText("  Suceessfully   Registried... ");
-//	   mailSender.send(message);
-	   
-	   // It will be working as Text and File. 
-	   MimeMessage message = mailSender.createMimeMessage();
-       MimeMessageHelper helper = new MimeMessageHelper(message, true);
+	       helper.setTo(email);
+	       helper.setSubject(name);
+	       helper.setText("Invoice details... ");
 
-       helper.setTo(email);
-       helper.setSubject(name);
-       helper.setText(" Suceessfully   Registried... ");
+	       FileSystemResource file = new FileSystemResource(attachment);
+	       helper.addAttachment(file.getFilename(), file);
 
-       FileSystemResource file = new FileSystemResource(attachment);
-       helper.addAttachment(file.getFilename(), file);
+	       mailSender.send(message);
+	   }
 
-       mailSender.send(message);
-	   
-   }
+
    
    public void sendSuccessEmail(String email, String name) throws MessagingException {
 	 
