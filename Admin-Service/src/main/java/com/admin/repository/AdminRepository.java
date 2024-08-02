@@ -11,7 +11,10 @@ import com.admin.entity.UserDetails;
 @Repository
 public interface AdminRepository extends JpaRepository<UserDetails, Long> {
 	
-	@Query("SELECT p.firstName, p.lastName, p.mobileNumber,p.joiningDate,p.paidAmount,p.pendingAmount,p.paymentETA, p.status  FROM UserDetails p WHERE p.frequency = :frequency AND p.hostelName = :hostelName")
+	@Query("SELECT  u  FROM UserDetails u WHERE  u.hostelName = :hostelName")
+    List<Object[]> findByHostelName( String hostelName);
+    
+    @Query("SELECT u.firstName, u.lastName, u.mobileNumber,u.joiningDate,u.paidAmount,u.pendingAmount,u.paymentETA, u.status  FROM UserDetails u WHERE u.frequency = :frequency AND u.hostelName = :hostelName")
     List<Object[]> findByFrequencyType(String frequency, String hostelName);
     
     

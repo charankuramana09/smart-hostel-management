@@ -43,6 +43,12 @@ public class AdminServiceImpl implements AdminService {
 
 	
 	
+	
+	@Override
+	public List<Object[]> getUserDetailsByHostelName(String hostelName) {
+		return adminRepository.findByHostelName( hostelName);
+	}
+	
 	  public List<Object[]> getUserDetailsByFrequencyType(String frequencyType, String hostelName) {
 	        return adminRepository.findByFrequencyType(frequencyType, hostelName);
 	    }
@@ -90,5 +96,11 @@ public class AdminServiceImpl implements AdminService {
 	    	dto.setRoomType(user.getRoomType());
 	    	return dto;
 	    }
+
+
+
+
+
+
 	    
 }

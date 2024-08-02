@@ -8,10 +8,17 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
 public class AdminException {
+	
 	@ExceptionHandler(OtpMissMatchException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ResponseEntity<String> handlePasswordMissMatchException(OtpMissMatchException ex) {
 		return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
 	}
+	
+	  @ExceptionHandler(InvalidEmailFormatException.class)
+	  @ResponseStatus(HttpStatus.BAD_REQUEST)
+	    public ResponseEntity<String> handleInvalidEmailFormatException(InvalidEmailFormatException ex) {
+	        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+	    }
 }
 

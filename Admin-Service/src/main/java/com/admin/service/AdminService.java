@@ -17,6 +17,8 @@ public interface AdminService {
 	//all data 
 	 public List<UserDetails> findAllUsers();
 	 
+	 //filtering HostelName like monthly,daily..
+	 public List<Object[]> getUserDetailsByHostelName( String hostelName);
 
 	 //filtering frequencyType like monthly,daily..
 	 public List<Object[]> getUserDetailsByFrequencyType(String frequencyType, String hostelName);
