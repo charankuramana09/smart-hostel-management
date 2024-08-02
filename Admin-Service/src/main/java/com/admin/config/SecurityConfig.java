@@ -38,7 +38,7 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests()
 		.requestMatchers("/email/signupSuccessEmail","/otp/**").permitAll()
-		.requestMatchers("/admin/all","/admin/filter","/admin/update/{userId}")
+		.requestMatchers("/admin/all","/admin/filter","/admin/update/{userId}","/admin/filter/hostelname")
 				.hasAnyRole(Authorities.ADMIN.name(), Authorities.SUPERVISOR.name(), Authorities.SUPERADMIN.name())
 				.anyRequest()
 				.authenticated()

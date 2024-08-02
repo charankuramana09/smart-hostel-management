@@ -40,6 +40,13 @@ public class AdminController {
 	}
 	
 	
+	@GetMapping("/filter/hostelname")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN', 'ROLE_SUPERVISOR')")
+	public ResponseEntity<List<Object[]>> getUserDetailsByHostelName(@RequestParam String hostelName) {
+		List<Object[]> details = adminService.getUserDetailsByHostelName( hostelName);
+		return ResponseEntity.ok(details);
+	}
+	
 	   @GetMapping("/filter")
 	   @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN', 'ROLE_SUPERVISOR')")
 	    public ResponseEntity<List<Object[]>> getUserDetailsByFrequencyType(@RequestParam String frequencyType, @RequestParam String hostelName) {
