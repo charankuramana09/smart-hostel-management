@@ -10,8 +10,10 @@ public class EmployeeSalariesMapper {
 		EmployeeSalariesDto employeeSalariesDto = new EmployeeSalariesDto(
 				employeeSalaries.getEmpId(),
 				employeeSalaries.getEmpName(),
+				employeeSalaries.getDesignation(),
 				employeeSalaries.getSalary(),
-				employeeSalaries.getSalaryDate()
+				employeeSalaries.getPaymentDate()
+				
         );
         return employeeSalariesDto;
     }
@@ -20,8 +22,10 @@ public class EmployeeSalariesMapper {
     	EmployeeSalaries employeeSalaries = new EmployeeSalaries(
     			employeeSalariesDto.getEmpId(),
     			employeeSalariesDto.getEmpName(),
+    			employeeSalariesDto.getDesignation(),
     			employeeSalariesDto.getSalary(),
-    			employeeSalariesDto.getSalaryDate()
+    			employeeSalariesDto.getPaymentDate()
+    			
         );
         return employeeSalaries;
     }

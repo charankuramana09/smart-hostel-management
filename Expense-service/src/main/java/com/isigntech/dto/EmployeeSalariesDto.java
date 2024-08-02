@@ -16,6 +16,7 @@ public class EmployeeSalariesDto {
 
 	 private Long empId;
 	 private String empName;
+	 private String designation;
 	 private Double salary;
-	 private Date salaryDate;
+	 private Date paymentDate;
 }

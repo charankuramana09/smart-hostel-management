@@ -23,6 +23,7 @@ public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     @Column(name = "purchase_date")
     private Date purchaseDate;
 

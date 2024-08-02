@@ -47,7 +47,8 @@ public class EmployeeSalariesServiceImpl implements EmployeeSalariesService {
         
         existingEmployeeSalaries.setEmpName(employeeSalariesDto.getEmpName());
         existingEmployeeSalaries.setSalary(employeeSalariesDto.getSalary());
-        existingEmployeeSalaries.setSalaryDate(employeeSalariesDto.getSalaryDate());
+        existingEmployeeSalaries.setPaymentDate(employeeSalariesDto.getPaymentDate());
+        existingEmployeeSalaries.setDesignation(employeeSalariesDto.getDesignation());
 
         EmployeeSalaries updatedEmployeeSalaries = employeeSalariesRepository.save(existingEmployeeSalaries);
         return EmployeeSalariesMapper.mapToEmployeeSalariesDto(updatedEmployeeSalaries);

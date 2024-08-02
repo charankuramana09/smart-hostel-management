@@ -1,8 +1,8 @@
 package com.isigntech.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,17 +17,17 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class EmployeeSalaries {
+public class MonthlyRent {
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private Long empId;
+	
+	 @Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	    private Long id;
 
-	    private String empName;
-	    
-	    private String designation;
-
-	    private Double salary;
-
-	    private Date paymentDate;
+	    private String hostelName;
+	    private String ownerName;
+	    private Date paidDate;
+	    private Double paidAmount;
+	    private String receiptAttached;
+	    private Double totalAmount;
 }
