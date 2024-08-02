@@ -37,7 +37,7 @@ public class ComplaintFormController {
 		return new ResponseEntity<ComplaintFormResponseDTO>(complaintFormService.raiseComplaint(formResponseDTO), HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/findById{complaintId}")
+	@GetMapping("/findById/{complaintId}")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN', 'ROLE_SUPERVISOR','ROLE_USER')")
 	ResponseEntity<ComplaintFormResponseDTO> getComplaintById(@PathVariable long complaintId){
 		

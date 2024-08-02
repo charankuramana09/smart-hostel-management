@@ -54,7 +54,7 @@ public class OTPController {
     
 
     @PostMapping("/validate-otp")
-    public String validateOTP(@RequestParam("email") String email, @RequestParam("otp") String otp) {
+    public String validateOTP(@RequestParam("email") String email, @RequestParam("+78=*-") String otp) {
         if (otpStorageService.validateOTP(email, otp)) {
             otpStorageService.removeOTP(email);
             return "OTP validated successfully";

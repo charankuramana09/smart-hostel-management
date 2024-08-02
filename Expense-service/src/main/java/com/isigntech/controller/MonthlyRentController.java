@@ -5,6 +5,7 @@ import com.isigntech.service.MonthlyRentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +20,7 @@ public class MonthlyRentController {
     private MonthlyRentService monthlyRentService;
 
     @PostMapping("/create")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN', 'ROLE_SUPERVISOR')")
     public ResponseEntity<MonthlyRentDto> createHostelPayment(@RequestParam("hostelName") String hostelName,
                                                               @RequestParam("ownerName") String ownerName,
                                                               @RequestParam("paidDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date paidDate,
@@ -38,6 +40,7 @@ public class MonthlyRentController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN', 'ROLE_SUPERVISOR')")
     public ResponseEntity<MonthlyRentDto> updateHostelPayment(@PathVariable Long id,
                                                               @RequestParam("hostelName") String hostelName,
                                                               @RequestParam("ownerName") String ownerName,
@@ -58,18 +61,21 @@ public class MonthlyRentController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN', 'ROLE_SUPERVISOR')")
     public ResponseEntity<MonthlyRentDto> getHostelPaymentById(@PathVariable Long id) {
         MonthlyRentDto hostelPaymentDto = monthlyRentService.getHostelPaymentById(id);
         return ResponseEntity.ok(hostelPaymentDto);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN', 'ROLE_SUPERVISOR')")
     public ResponseEntity<Void> deleteHostelPayment(@PathVariable Long id) {
         monthlyRentService.deleteHostelPayment(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN', 'ROLE_SUPERVISOR')")
     public ResponseEntity<List<MonthlyRentDto>> getAllHostelPayments() {
         List<MonthlyRentDto> hostelPayments = monthlyRentService.getAllHostelPayments();
         return ResponseEntity.ok(hostelPayments);
