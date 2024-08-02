@@ -3,6 +3,7 @@ package com.isigntech.filter;
 import java.io.IOException;
 
 
+
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.isigntech.Service.JwtService;
+import com.isigntech.util.EdgeThreadLocal;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -56,6 +58,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 					UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 							email, null, convertToGrantedAuthorities);
 					SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+					EdgeThreadLocal.edgeThreadLocalholder.get().put("jwt-token", jwt);
 				} else {
 					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 					response.getWriter().write("Invalid token. Please login again.");

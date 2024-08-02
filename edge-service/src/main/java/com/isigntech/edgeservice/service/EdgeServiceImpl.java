@@ -39,15 +39,35 @@ public class EdgeServiceImpl implements EdgeService {
 		restTemplate.exchange(uriString, HttpMethod.POST, requestEntity, Void.class);
 	}
 	
-	public void getPaymentStatusFromPaymentService(String paymentId,String userId){
-		String uriString = UriComponentsBuilder.fromHttpUrl(adminUrl).path("/email/signupSuccessEmail")
-				.queryParam("paymentId", paymentId).queryParam("userId", userId).toUriString();
+	@Override
+	public String updateStatus(String paymentId, String userId) {
+		String paymentStatusFromPaymentService = this.getPaymentStatusFromPaymentService(paymentId, userId);
+		return this.updatePaymentStatusInHostellerService(userId, paymentStatusFromPaymentService);
+	}
+	@Override
+	public String getPaymentStatusFromPaymentService(String paymentId,String userId){
+		 String uriString = UriComponentsBuilder.fromHttpUrl(paymentUrl)
+	                .path("/payment/getPaymentStatus")
+	                .queryParam("paymentId", paymentId)
+	                .queryParam("userId", userId)
+	                .toUriString();
 
 		String emptyBody = "";
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<String> requestEntity = new HttpEntity<>(emptyBody, headers);
-		 String paymentStatus = restTemplate.exchange(uriString, HttpMethod.POST, requestEntity, String.class).getBody();
+		return restTemplate.exchange(uriString, HttpMethod.GET, requestEntity, String.class).getBody();
+	}
+	public String updatePaymentStatusInHostellerService(String userId,String paymentStatus){
+		String uriString = UriComponentsBuilder.fromHttpUrl(hostellerUrl).path("/user/updatePaymentStatus")
+				.queryParam("userId", userId).queryParam("paymentStatus", paymentStatus).toUriString();
+
+		String emptyBody = "";
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<String> requestEntity = new HttpEntity<>(emptyBody, headers);
+		 String update = restTemplate.exchange(uriString, HttpMethod.PUT, requestEntity, String.class).getBody();
+		 return update;
 	}
 	
 	

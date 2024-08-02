@@ -23,7 +23,6 @@ import com.isigntech.edgeservice.filter.JwtAuthenticationFilter;
 import com.isigntech.edgeservice.service.UserDetailsServiceImpl;
 import com.isigntech.edgeservice.util.Authorities;
 
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -41,12 +40,12 @@ public class SecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 
-
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
 			throws Exception {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
+
 	@Bean
 	public AuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
@@ -56,18 +55,16 @@ public class SecurityConfig {
 	}
 
 	@Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
-                	.requestMatchers("/api/register", "/api/login").permitAll()
-                	 .requestMatchers("/api/updateActive").hasAnyRole(Authorities.ADMIN.name(),Authorities.SUPERADMIN.name(),Authorities.SUPERVISOR.name())
-                	.anyRequest().authenticated()
-            .and()
-            .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        return http.build();
-    }
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.csrf().disable().authorizeRequests()
+				.requestMatchers("/api/register", "/api/login").permitAll()
+				.requestMatchers("/edge/updatePayment").hasRole(Authorities.USER.name())
+				.requestMatchers("/api/updateActive")
+				.hasAnyRole(Authorities.ADMIN.name(), Authorities.SUPERADMIN.name(), Authorities.SUPERVISOR.name())
+				.anyRequest().authenticated().and().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+		return http.build();
+	}
 
 }
