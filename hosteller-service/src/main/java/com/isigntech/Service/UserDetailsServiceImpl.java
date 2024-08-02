@@ -1,10 +1,13 @@
 package com.isigntech.Service;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.ReflectionUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -81,5 +84,51 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		userDetailsRepository.updateByUserId(userId, paymentStatus);
 		return "updated";
 	}
+	
+	@Override
+    public UserDetailsResponseDto patchUserDetails(long userId, Map<String, Object> updates) {
+        UserDetails user = userDetailsRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        updates.forEach((key, value) -> {
+            try {
+                Field field = UserDetails.class.getDeclaredField(key);
+                field.setAccessible(true);
+                ReflectionUtils.setField(field, user, value);
+            } catch (NoSuchFieldException e) {
+                // Log the exception
+                System.err.println("Failed to update field: " + key + " with value: " + value);
+            }
+        });
+
+        UserDetails savedUser = userDetailsRepository.save(user);
+        return mapToDto(savedUser);
+    }
+	
+	private UserDetailsResponseDto mapToDto(UserDetails user) {
+        UserDetailsResponseDto dto = new UserDetailsResponseDto();
+        dto.setUserId(user.getUserId());
+        dto.setFirstName(user.getFirstName());
+        dto.setLastName(user.getLastName());
+        dto.setGender(user.getGender());
+        dto.setJoiningDate(user.getJoiningDate());
+        dto.setPurpose(user.getPurpose());
+        dto.setRoomSharing(user.getRoomSharing());
+        dto.setFrequency(user.getFrequency());
+        dto.setUserType(user.getUserType());
+        dto.setMobileNumber(user.getMobileNumber());
+        dto.setAlternateMobileNumber(user.getAlternateMobileNumber());
+        dto.setEmail(user.getEmail());
+        dto.setIdProof(user.getIdProof());
+        dto.setStatus(user.isStatus());
+        dto.setPaidAmount(user.getPaidAmount());
+        dto.setPendingAmount(user.getPendingAmount());
+        dto.setAdvancePayment(user.getAdvancePayment());
+        dto.setHostelName(user.getHostelName());
+        dto.setPaymentETA(user.getPaymentETA());
+        dto.setRoomNumber(user.getRoomNumber());
+        dto.setRoomType(user.getRoomType());
+        return dto;
+    }
 
 }

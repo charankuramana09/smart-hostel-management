@@ -2,15 +2,18 @@ package com.isigntech.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,50 +26,62 @@ import com.isigntech.Service.UserDetailsService;
 @RestController
 @RequestMapping("/user")
 public class UserDetailsController {
-	
+
 	@Autowired
 	UserDetailsService userDetailsService;
-	
-	
+
 	@PostMapping("/save")
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<UserDetailsResponseDto> saveUser(@RequestParam("userDetails") String userDetailsResponseDto, @RequestParam("file") MultipartFile file) throws IOException{
-		UserDetailsResponseDto value = new ObjectMapper().readValue(userDetailsResponseDto, UserDetailsResponseDto.class);
+	public ResponseEntity<UserDetailsResponseDto> saveUser(@RequestParam("userDetails") String userDetailsResponseDto,
+			@RequestParam("file") MultipartFile file) throws IOException {
+		UserDetailsResponseDto value = new ObjectMapper().readValue(userDetailsResponseDto,
+				UserDetailsResponseDto.class);
 		value.setIdProof(file.getBytes());
-		return new ResponseEntity<UserDetailsResponseDto>(userDetailsService.saveUserDetails(value),HttpStatus.CREATED);
-		
+		return new ResponseEntity<UserDetailsResponseDto>(userDetailsService.saveUserDetails(value),
+				HttpStatus.CREATED);
+
 	}
-	
+
 	@GetMapping("/getId/{userId}")
 	@PreAuthorize("hasAnyRole('ROLE_USER')")
-	public ResponseEntity<UserDetailsResponseDto> getById(@PathVariable long userId){
-		
+	public ResponseEntity<UserDetailsResponseDto> getById(@PathVariable long userId) {
+
 		return new ResponseEntity<UserDetailsResponseDto>(userDetailsService.getById(userId), HttpStatus.OK);
 	}
-	
-	
-	
-	
-	 @PutMapping("/update{userId}")
-	 @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN', 'ROLE_SUPERVISOR','ROLE_USER')")
-	    public ResponseEntity<UserDetailsResponseDto> updateUser(
-	            @RequestParam("userDetails") String userDetailsResponseDto,
-	            @RequestParam("file") MultipartFile file,
-	            @RequestParam("userId") Long userId) throws IOException {
 
-	        ObjectMapper objectMapper = new ObjectMapper();
-	        UserDetailsResponseDto value = objectMapper.readValue(userDetailsResponseDto, UserDetailsResponseDto.class);
-	        value.setIdProof(file.getBytes());
+	@PutMapping("/update{userId}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN', 'ROLE_SUPERVISOR','ROLE_USER')")
+	public ResponseEntity<UserDetailsResponseDto> updateUser(@RequestParam("userDetails") String userDetailsResponseDto,
+			@RequestParam("file") MultipartFile file, @RequestParam("userId") Long userId) throws IOException {
 
-	        UserDetailsResponseDto updatedUserDetails = userDetailsService.updateUserDetails(value, userId);
-	        return new ResponseEntity<>(updatedUserDetails, HttpStatus.OK);
-	    }
-	 @PutMapping("/updatePaymentStatus")
-	 @PreAuthorize("hasAnyRole('ROLE_USER')")
-	 public ResponseEntity<String> updatePaymentStatus( @RequestParam("userId")Long userId,  @RequestParam("paymentStatus")String paymentStatus) {
-		 return ResponseEntity.ok(userDetailsService.updatePaymentStatus(userId, paymentStatus));
-	 }
-		 
-		 
+		ObjectMapper objectMapper = new ObjectMapper();
+		UserDetailsResponseDto value = objectMapper.readValue(userDetailsResponseDto, UserDetailsResponseDto.class);
+		value.setIdProof(file.getBytes());
+
+		UserDetailsResponseDto updatedUserDetails = userDetailsService.updateUserDetails(value, userId);
+		return new ResponseEntity<>(updatedUserDetails, HttpStatus.OK);
+	}
+
+	@PutMapping("/updatePaymentStatus")
+	@PreAuthorize("hasAnyRole('ROLE_USER')")
+	public ResponseEntity<String> updatePaymentStatus(@RequestParam("userId") Long userId,
+			@RequestParam("paymentStatus") String paymentStatus) {
+		return ResponseEntity.ok(userDetailsService.updatePaymentStatus(userId, paymentStatus));
+	}
+
+	@PatchMapping("/patch/{userId}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN', 'ROLE_SUPERVISOR','ROLE_USER')")
+	public ResponseEntity<UserDetailsResponseDto> patchUserDetails(@PathVariable long userId,
+			@RequestBody Map<String, Object> updates) {
+		try {
+			UserDetailsResponseDto updatedUser = userDetailsService.patchUserDetails(userId, updates);
+			return ResponseEntity.ok(updatedUser);
+		} catch (Exception e) {
+			// Log the exception
+			System.err.println("Error updating user details: " + e.getMessage());
+			// Return a proper response entity with an error message and status code
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
 
 }

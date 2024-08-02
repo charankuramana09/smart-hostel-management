@@ -54,10 +54,10 @@ public class AdminController {
 	        return ResponseEntity.ok(details);
 	    }
 	   
-//	   @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN', 'ROLE_SUPERVISOR')")
 	       
 	    
 	    @PatchMapping("/patch/{userId}")
+	    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN', 'ROLE_SUPERVISOR')")
 	    public ResponseEntity<UserDetailsResponseDto> patchUserDetails(@PathVariable long userId, @RequestBody Map<String, Object> updates) {
 	        try {
 	            UserDetailsResponseDto updatedUser = adminService.patchUserDetails(userId, updates);

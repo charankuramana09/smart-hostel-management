@@ -34,36 +34,35 @@ public class SecurityConfig {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
 
-//	@Bean
-//	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//		http.csrf().disable().authorizeRequests()
-//		.requestMatchers("/email/signupSuccessEmail","/otp/**").permitAll()
-//		.requestMatchers("/admin/all","/admin/filter","/admin/update/{userId}","/admin/filter/hostelname")
-//				.hasAnyRole(Authorities.ADMIN.name(), Authorities.SUPERVISOR.name(), Authorities.SUPERADMIN.name())
-//				.anyRequest()
-//				.authenticated()
-//				.and()
-//				.sessionManagement()
-//				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-//				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-//		return http.build();
-//	}
-	
-	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests()
-//				 .requestMatchers("/payment/createLink","/payment/getPaymentStatus")
-//				 .hasAnyRole(Authorities.USER.name())
-//				 .requestMatchers("/payment/getPaymentStatus")
-//				 .hasAnyRole(Authorities.ADMIN.name(), Authorities.SUPERVISOR.name(), Authorities.SUPERADMIN.name())
-				.anyRequest().permitAll()
-//				.authenticated()
+		.requestMatchers("/email/signupSuccessEmail","/otp/**").permitAll()
+		.requestMatchers("/admin/all","/admin/filter","/admin/update/{userId}","/admin/filter/hostelname","/admin/patch")
+				.hasAnyRole(Authorities.ADMIN.name(), Authorities.SUPERVISOR.name(), Authorities.SUPERADMIN.name())
+				.anyRequest()
+				.authenticated()
 				.and()
 				.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 		return http.build();
 	}
+	
+	
+//	@Bean
+//	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//		http.csrf().disable().authorizeRequests()
+//				 .requestMatchers("/payment/createLink","/payment/getPaymentStatus")
+//				 .hasAnyRole(Authorities.USER.name())
+//				 .requestMatchers("/payment/getPaymentStatus")
+//				 .hasAnyRole(Authorities.ADMIN.name(), Authorities.SUPERVISOR.name(), Authorities.SUPERADMIN.name())
+//				.anyRequest().authenticated()
+//				.and()
+//				.sessionManagement()
+//				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+//				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+//		return http.build();
+//	}
 
 }
