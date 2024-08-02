@@ -36,6 +36,8 @@ import com.isigntech.edgeservice.validator.PasswordValidator;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 	@Autowired
+	private EdgeService edgeService;
+	@Autowired
 	private PasswordValidator passwordValidator;
 	@Autowired
 	private UsersRepository userRepository;
@@ -83,6 +85,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		userRepository.save(encodeUser);
 		Map<String, String> response = new HashMap<>();
 		response.put("message", "success");
+		edgeService.sendSuccessEmail(user.getEmail(), user.getLastName(),user.getFirstName());
 		return response;
 
 	}

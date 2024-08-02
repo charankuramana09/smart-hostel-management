@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.isigntech.Model.UserDetails;
@@ -73,5 +74,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         return detailsResponseDto;
     }
+
+	@Override
+	public String updatePaymentStatus(Long userId, String paymentStatus) {
+		userDetailsRepository.updateByUserId(userId, paymentStatus);
+		return "updated";
+	}
 
 }

@@ -27,6 +27,7 @@ public class UserDetailsResponseDto {
 	double advancePayment;
 	String hostelName;
 	Date paymentETA;
+	private String paymentStatus;
 	int roomNumber;
 	String roomType;
 

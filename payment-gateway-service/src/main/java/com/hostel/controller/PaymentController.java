@@ -38,7 +38,7 @@ public class PaymentController {
 
     @GetMapping("/getPaymentStatus")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN', 'ROLE_SUPERVISOR','ROLE_USER')")
-    public PaymentStatus getPaymentStatus(@RequestParam("paymentId") String paymentId, @RequestParam("userId") String userId){
-        return paymentService.getPaymentStatus(paymentId, userId);
+    public String getPaymentStatus(@RequestParam("paymentId") String paymentId, @RequestParam("userId") String userId){
+        return (paymentService.getPaymentStatus(paymentId, userId)).toString();
     }
 }

@@ -1,6 +1,6 @@
-package com.isigntech.Model;
-
+package com.admin.entity;
 import java.sql.Time;
+
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -20,22 +20,23 @@ import lombok.NoArgsConstructor;
 public class ComplaintForm {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long complaintId;
-	private String firstName;
-	private String lastName;
-	private long contactNumber;
-	private String email;
+	long complaintId;
+	String firstName;
+	String lastName;
+	long contactNumber;
+	String email;
 
-	private Date date;  
+	private Date date;
 	private Time time;
-	private String description;
-	private String action;
-	private String typeComplaint;
+	String description;
+	String action;
+	String typeComplaint;
 	@Lob
 	@Column(name = "supporting_Document", columnDefinition = "LONGBLOB")
-	private byte[] supportingDocument;
-	private String othersInvolved;
-    private String location;
-	private Status status;
+	byte[] supportingDocument;
+	String othersInvolved;
+    String location;
+	Status status;
+	
 
 }

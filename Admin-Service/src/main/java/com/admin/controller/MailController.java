@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +18,7 @@ import jakarta.mail.MessagingException;
 
 
 @RestController
+@RequestMapping("/email")
 public class MailController {
 	
 	@Autowired
@@ -27,7 +29,7 @@ public class MailController {
 //	File file = new File(classLoader.getResource("testfile.pdf").getFile());
 
 		
-	@PostMapping("/mail")
+	@PostMapping("/sendInvoice")
 	public String mail(@RequestParam("email") String email,
             @RequestParam("name") String name,
             @RequestParam("file") MultipartFile file) throws IllegalStateException, IOException  {
@@ -38,6 +40,20 @@ public class MailController {
             file.transferTo(convFile);
             
 			mailService.mail(email ,name, convFile);
+			return "Email sent successfully";
+		} catch (MessagingException e) {
+			e.printStackTrace();
+			return "Failed to send email";
+		}
+	}
+	
+	@PostMapping("/signupSuccessEmail")
+	public String mail(@RequestParam("email") String email,
+            @RequestParam("firstName") String firstName,
+            @RequestParam("lastName") String lastName) {
+		
+		try {
+			mailService.sendSuccessEmail(email ,lastName+" "+firstName);
 			return "Email sent successfully";
 		} catch (MessagingException e) {
 			e.printStackTrace();
