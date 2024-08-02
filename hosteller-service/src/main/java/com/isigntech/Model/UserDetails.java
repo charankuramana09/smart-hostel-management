@@ -43,5 +43,6 @@ public class UserDetails {
 	private Date paymentETA;
 	private int roomNumber;
 	private String roomType;
+	private String paymentStatus;
 
 }

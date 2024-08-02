@@ -61,7 +61,12 @@ public class UserDetailsController {
 	        UserDetailsResponseDto updatedUserDetails = userDetailsService.updateUserDetails(value, userId);
 	        return new ResponseEntity<>(updatedUserDetails, HttpStatus.OK);
 	    }
-	
-
+	 @GetMapping("/updatePaymentStatus")
+	 @PreAuthorize("hasAnyRole('ROLE_USER')")
+	 public ResponseEntity<String> updatePaymentStatus(Long userId, String paymentStatus) {
+		 return ResponseEntity.ok("updated");
+	 }
+		 
+		 
 
 }
