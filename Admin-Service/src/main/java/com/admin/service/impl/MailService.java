@@ -20,11 +20,7 @@ public class MailService {
 	@Autowired
 	private JavaMailSender mailSender;
 
-	// It is working local-file and object type..
-//	public void signup(MailRequestEmail req , File attachment ) throws MessagingException {
-//		
-//		sendConfirmationEmail(req.getEmail(),req.getName(), attachment);
-//	}
+
 	
 	public void sendInvioceMail(String email, String name, File attachment) throws MessagingException {
 		   MimeMessage message = mailSender.createMimeMessage();
