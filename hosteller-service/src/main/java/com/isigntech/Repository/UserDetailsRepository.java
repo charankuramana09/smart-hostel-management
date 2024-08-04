@@ -14,5 +14,7 @@ public interface UserDetailsRepository extends JpaRepository<UserDetails, Long> 
 	@Modifying
 	@Query("UPDATE UserDetails p SET p.paymentStatus = :newPaymentStatus WHERE p.userId = :userId")
 	void updateByUserId(Long userId, String newPaymentStatus);
+	
+	 UserDetails findByEmail(String email);
 
 }

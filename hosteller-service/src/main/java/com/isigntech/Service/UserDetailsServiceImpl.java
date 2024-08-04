@@ -130,5 +130,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         dto.setRoomType(user.getRoomType());
         return dto;
     }
+	
+	 public UserDetailsResponseDto getUserByEmail(String email) {
+	        UserDetails user = userDetailsRepository.findByEmail(email);
+	        UserDetailsResponseDto userDetailsResponseDto = modelMapper.map(user, UserDetailsResponseDto.class);
+			return userDetailsResponseDto;
+	    }
 
 }
