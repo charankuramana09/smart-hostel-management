@@ -30,11 +30,19 @@ public class ComplaintFormController {
 	
 	@PostMapping("/raiseTicket")
 	@PreAuthorize("hasRole('ROLE_USER')")
-	ResponseEntity<ComplaintFormResponseDTO> raiseComplaintFromUser(@RequestParam ("complaintForm")  String complaintFormResponseDTO,@RequestParam("supportingDocument") MultipartFile file) throws Exception, IOException{
-		ComplaintFormResponseDTO formResponseDTO = new ObjectMapper().readValue(complaintFormResponseDTO, ComplaintFormResponseDTO.class);
-		formResponseDTO.setSupportingDocument(file.getBytes());
-		
-		return new ResponseEntity<ComplaintFormResponseDTO>(complaintFormService.raiseComplaint(formResponseDTO), HttpStatus.CREATED);
+	public ResponseEntity<ComplaintFormResponseDTO> raiseComplaintFromUser(
+			@RequestParam("complaintForm") String complaintFormResponseDTO,
+			@RequestParam("supportingDocument") MultipartFile file) throws Exception, IOException {
+		// LOG Received Data For Debugging
+		System.out.println("Received complaintForm: " + complaintFormResponseDTO);
+		System.out.println("Received file: " + file.getOriginalFilename());
+		ComplaintFormResponseDTO formResponseDTO = new ObjectMapper().readValue(complaintFormResponseDTO,
+				ComplaintFormResponseDTO.class);
+		if (file != null && !file.isEmpty()) {
+			formResponseDTO.setSupportingDocument(file.getBytes());
+		}
+		ComplaintFormResponseDTO responseDTO = complaintFormService.raiseComplaint(formResponseDTO);
+		return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/findById/{complaintId}")
