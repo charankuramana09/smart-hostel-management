@@ -30,7 +30,8 @@ public class ThreadLocalUserContext {
     	Map<String,String> userMap=new HashMap();
     	userMap.put("authorities",authoritiesString);
     	userMap.put("firstName", users.getFirstName());
-    	userMap.put("lastName", users.getLastName());
+    	userMap.put("lastName", users.getLastName());	
+    	userMap.put("email", users.getEmail());
     	return userMap;
     	
     }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.isigntech.Model.UserDetails;
 import com.isigntech.ResponseDto.UserDetailsResponseDto;
 import com.isigntech.Service.UserDetailsService;
 
@@ -83,5 +84,12 @@ public class UserDetailsController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 	}
+	
+	@GetMapping("/getUserData/{email}")
+	@PreAuthorize("hasAnyRole('ROLE_USER')")
+    public ResponseEntity<UserDetailsResponseDto> getUserByEmail(@PathVariable String email) {
+        System.out.println("Controller method called to get user by email: " + email);
+        return ResponseEntity.ok(userDetailsService.getUserByEmail(email));
+    }
 
 }
