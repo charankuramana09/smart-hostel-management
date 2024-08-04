@@ -1,5 +1,5 @@
 package com.hostel.entity;
 
 public enum PaymentStatus {
-	SUCCESS, FAILURE, INITIATED
+	SUCCESS, FAILURE, INITIATED, PENDING
 }

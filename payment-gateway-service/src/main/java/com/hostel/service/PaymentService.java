@@ -1,6 +1,9 @@
 package com.hostel.service;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +47,8 @@ public class PaymentService {
         paymentResponse.setPaymentLink(paymentLink);
         paymentResponse.setUserId(userId);
         paymentRepository.save(paymentResponse);
+        paymentResponse.setStatus(PaymentStatus.PENDING); 
+        paymentResponse.setPaymentDate(LocalDate.now());
 
         logger.info("Payment link created and saved: {}", paymentLink);
         return paymentLink;
@@ -68,5 +73,19 @@ public class PaymentService {
 
         logger.info("Payment status updated: {}", status);
         return status;
+    }
+    
+    public List<PaymentLinkRequestDto> getAllPaymentDetails() {
+        logger.info("Fetching all payment details");
+
+        return paymentRepository.findAll().stream().map(payment -> {
+            PaymentLinkRequestDto dto = new PaymentLinkRequestDto();
+            dto.setUserId(payment.getUserId());
+            dto.setUserName("dummyUserName"); // Set actual value if available
+            dto.setPhone("dummyPhone"); // Set actual value if available
+            dto.setAmount(payment.getAmount());
+            dto.setPaymentDate(payment.getPaymentDate());
+            return dto;
+        }).collect(Collectors.toList());
     }
 }

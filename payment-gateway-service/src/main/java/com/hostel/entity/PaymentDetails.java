@@ -1,5 +1,7 @@
 package com.hostel.entity;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -20,4 +22,5 @@ public class PaymentDetails extends BaseModel{
     @Enumerated(EnumType.STRING)
     private PaymentStatus status;
     private double amount;
+    private LocalDate paymentDate;
 }

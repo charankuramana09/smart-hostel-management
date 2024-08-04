@@ -25,5 +25,7 @@ public interface AdminService {
 	 
 	 //update 
 	  public UserDetailsResponseDto patchUserDetails(long userId, Map<String, Object> updates);
+	  
+	  public Map<String, Object> validateMobileNumbers(List<Long> mobileNumbers);
 
 }

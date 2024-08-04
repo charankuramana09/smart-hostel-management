@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +19,7 @@ public class MonthlyRentServiceImpl implements MonthlyRentService {
 
     @Autowired
     private MonthlyRentRepository monthlyRentRepository;
-
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     @Override
     public MonthlyRent saveMonthlyRent(MonthlyRentDto monthlyRentDTO) {
         MonthlyRent monthlyRent = new MonthlyRent();

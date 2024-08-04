@@ -1,23 +1,20 @@
 package com.admin.service.impl;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.ReflectionUtils;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ReflectionUtils.FieldFilter;
 
 import com.admin.dto.UserDetailsResponseDto;
 import com.admin.entity.UserDetails;
 import com.admin.repository.AdminRepository;
 import com.admin.service.AdminService;
-
-import jakarta.transaction.Transactional;
 
 
 @Service
@@ -41,6 +38,23 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 
+	
+	public Map<String, Object> validateMobileNumbers(List<Long> mobileNumbers) {
+        // Fetch existing mobile numbers
+        List<Long> existingMobileNumbers = adminRepository.findExistingMobileNumbers(mobileNumbers);
+
+        // Determine non-existing mobile numbers
+        List<Long> nonExistingMobileNumbers = mobileNumbers.stream()
+            .filter(mobileNumber -> !existingMobileNumbers.contains(mobileNumber))
+            .collect(Collectors.toList());
+
+        // Prepare the response
+        Map<String, Object> response = new HashMap<>();
+        response.put("existingMobileNumbers", existingMobileNumbers);
+        response.put("nonExistingMobileNumbers", nonExistingMobileNumbers);
+
+        return response;
+    }
 	
 	
 	
