@@ -44,8 +44,8 @@ public class AdminController {
 	
 	@GetMapping("/filter/hostelname")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN', 'ROLE_SUPERVISOR')")
-	public ResponseEntity<List<Map<String, Object>>> getUserDetailsByHostelName(@RequestParam String hostelName) {
-	    List<UserDetails> details = adminService.findByHostelName(hostelName);
+	public ResponseEntity<List<Map<String, Object>>> getUserDetailsByHostelName(@RequestParam String frequencyType,@RequestParam String hostelName) {
+	    List<UserDetails> details = adminService.findByHostelNameAndFrequency(hostelName,frequencyType);
 
 	    List<Map<String, Object>> result = details.stream()
 	            .map(userDetails -> {

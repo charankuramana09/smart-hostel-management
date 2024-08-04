@@ -45,7 +45,7 @@ public class AdminServiceImpl implements AdminService {
 	
 	
 	@Override
-	 public List<UserDetails> findByHostelName( String hostelName){
+	 public List<UserDetails> findByHostelNameAndFrequency( String hostelName, String frequency){
 		return adminRepository.findByHostelName( hostelName);
 	}
 	
