@@ -19,5 +19,7 @@ public interface UserDetailsService {
 	UserDetailsResponseDto patchUserDetails(long userId, Map<String, Object> updates);
 	
 	public UserDetailsResponseDto getUserByEmail(String email);
+	public Boolean getUserDataBoolean(String email);
+	
 
 }

@@ -1,5 +1,7 @@
 package com.isigntech.edgeservice.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,7 +23,7 @@ public class EdgeController {
 	
 	@PutMapping("/updatePayment")
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<String> getPaymentStatus(@RequestParam("paymentId") String paymentId,
+	public ResponseEntity<Map<String, String>> getPaymentStatus(@RequestParam("paymentId") String paymentId,
 			@RequestParam("userId") String userId) {
 		return ResponseEntity.ok(edgeService.updateStatus(paymentId, userId));
 	}

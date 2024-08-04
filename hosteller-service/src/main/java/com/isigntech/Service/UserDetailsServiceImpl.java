@@ -137,4 +137,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			return userDetailsResponseDto;
 	    }
 
+	@Override
+	public Boolean getUserDataBoolean(String email) {
+		UserDetails userByEmail = userDetailsRepository.findByEmail(email);
+		if(userByEmail!=null) {
+			return true;
+		}
+		return false;
+	}
+
 }

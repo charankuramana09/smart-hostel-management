@@ -31,6 +31,7 @@ public class UserDetails {
 	private String userType;
 	private long mobileNumber;
 	private long alternateMobileNumber;
+	@Column(unique = true)
 	private String email;
 	@Lob
 	@Column(name = "id_proof", columnDefinition = "LONGBLOB")

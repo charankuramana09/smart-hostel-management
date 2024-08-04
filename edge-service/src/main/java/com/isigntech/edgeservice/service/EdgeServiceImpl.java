@@ -1,5 +1,8 @@
 package com.isigntech.edgeservice.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -40,9 +43,11 @@ public class EdgeServiceImpl implements EdgeService {
 	}
 	
 	@Override
-	public String updateStatus(String paymentId, String userId) {
+	public Map<String, String> updateStatus(String paymentId, String userId) {
 		String paymentStatusFromPaymentService = this.getPaymentStatusFromPaymentService(paymentId, userId);
-		return this.updatePaymentStatusInHostellerService(userId, paymentStatusFromPaymentService);
+		Map<String,String> map=new HashMap();
+		map.put("update", this.updatePaymentStatusInHostellerService(userId, paymentStatusFromPaymentService));
+		return map;
 	}
 	@Override
 	public String getPaymentStatusFromPaymentService(String paymentId,String userId){

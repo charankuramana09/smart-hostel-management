@@ -35,36 +35,36 @@ public class SecurityConfig {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
 
-//	@Bean
-//	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//		http.csrf().disable().authorizeRequests()
-//				 .requestMatchers("/complaint/raiseTicket","/complaint/findById/*","/complaint/patch/*","/user/save","/user/getId/*","/user/update/*","/user/updatePaymentStatus","/user/patch","/user/getUserData/*")
-//				 .hasAnyRole(Authorities.USER.name())
-//				 .requestMatchers("/complaint/findById/*","/user/update","/user/patch","/complaint/patch")
-//				 .hasAnyRole(Authorities.ADMIN.name(), Authorities.SUPERVISOR.name(), Authorities.SUPERADMIN.name())
-//				.anyRequest()
-//				.authenticated()
-//				.and()
-//				.sessionManagement()
-//				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-//				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-//		return http.build();
-//	}
-	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests()
-//				 .requestMatchers("/payment/createLink","/payment/getPaymentStatus")
-//				 .hasAnyRole(Authorities.USER.name())
-//				 .requestMatchers("/payment/getPaymentStatus")
-//				 .hasAnyRole(Authorities.ADMIN.name(), Authorities.SUPERVISOR.name(), Authorities.SUPERADMIN.name())
-				.anyRequest().permitAll()
-//				.authenticated()
+				 .requestMatchers("/complaint/raiseTicket","/complaint/findById/*","/complaint/patch/*","/user/save","/user/getId/*","/user/update/*","/user/updatePaymentStatus","/user/patch","/user/getUserData/*","/user/getUserDataBoolean/*")
+				 .hasAnyRole(Authorities.USER.name())
+				 .requestMatchers("/complaint/findById/*","/user/update","/user/patch","/complaint/patch")
+				 .hasAnyRole(Authorities.ADMIN.name(), Authorities.SUPERVISOR.name(), Authorities.SUPERADMIN.name())
+				.anyRequest()
+				.authenticated()
 				.and()
 				.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 		return http.build();
 	}
+	
+//	@Bean
+//	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//		http.csrf().disable().authorizeRequests()
+////				 .requestMatchers("/payment/createLink","/payment/getPaymentStatus")
+////				 .hasAnyRole(Authorities.USER.name())
+////				 .requestMatchers("/payment/getPaymentStatus")
+////				 .hasAnyRole(Authorities.ADMIN.name(), Authorities.SUPERVISOR.name(), Authorities.SUPERADMIN.name())
+//				.anyRequest().permitAll()
+////				.authenticated()
+//				.and()
+//				.sessionManagement()
+//				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+//				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+//		return http.build();
+//	}
 
 }

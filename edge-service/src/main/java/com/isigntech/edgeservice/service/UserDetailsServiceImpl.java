@@ -97,7 +97,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		UserDetails userDetails = (UserDetails) authenticate.getPrincipal();
 		if (authenticate.isAuthenticated()) {
 			String token = jwtService.generateToken(userDetails);
-			System.err.println(token);
 			Map<String, String> userMap = ThreadLocalUserContext.getUser();
 			userMap.put("jwtToken", token);
 			return userMap;

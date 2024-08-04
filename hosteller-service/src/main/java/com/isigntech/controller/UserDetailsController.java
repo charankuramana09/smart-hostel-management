@@ -91,5 +91,12 @@ public class UserDetailsController {
         System.out.println("Controller method called to get user by email: " + email);
         return ResponseEntity.ok(userDetailsService.getUserByEmail(email));
     }
+	
+	@GetMapping("/getUserDataBoolean/{email}")
+	@PreAuthorize("hasAnyRole('ROLE_USER')")
+    public ResponseEntity<Boolean> getUserDataBoolean(@PathVariable String email) {
+        System.out.println("Controller method called to get user by email: " + email);
+        return ResponseEntity.ok(userDetailsService.getUserDataBoolean(email));
+    }
 
 }
