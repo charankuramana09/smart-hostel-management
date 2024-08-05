@@ -13,14 +13,15 @@ public class HostellerServiceApplication {
 		SpringApplication.run(HostellerServiceApplication.class, args);
 	}
 	@Bean
-	public WebMvcConfigurer corsConfigurer()
-	{
+	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
-			public void addCorsMappings(CorsRegistry registry)
-			{
-				registry.addMapping("/**").allowedOrigins("http://localhost:4200");
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**").allowedOrigins("http://localhost:4200") // Update with your frontend URL
+						.allowedMethods("GET", "POST", "PUT", "DELETE","PATCH").allowedHeaders("*").allowCredentials(true)
+						.maxAge(3600);
 			}
 		};
 	}
+
 }
