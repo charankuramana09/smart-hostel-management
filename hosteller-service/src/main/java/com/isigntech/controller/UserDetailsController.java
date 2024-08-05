@@ -66,8 +66,8 @@ public class UserDetailsController {
 	@PutMapping("/updatePaymentStatus")
 	@PreAuthorize("hasAnyRole('ROLE_USER')")
 	public ResponseEntity<String> updatePaymentStatus(@RequestParam("userId") Long userId,
-			@RequestParam("paymentStatus") String paymentStatus) {
-		return ResponseEntity.ok(userDetailsService.updatePaymentStatus(userId, paymentStatus));
+			@RequestParam("paymentInfo") String paymentInfo) {
+		return ResponseEntity.ok(userDetailsService.updatePaymentStatus(userId, paymentInfo));
 	}
 
 	@PatchMapping("/patch/{userId}")

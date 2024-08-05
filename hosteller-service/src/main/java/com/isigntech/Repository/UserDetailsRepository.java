@@ -13,8 +13,9 @@ import com.isigntech.Model.UserDetails;
 public interface UserDetailsRepository extends JpaRepository<UserDetails, Long> {
 	@Transactional
 	@Modifying
-	@Query("UPDATE UserDetails p SET p.paymentStatus = :newPaymentStatus WHERE p.userId = :userId")
-	void updateByUserId(Long userId, String newPaymentStatus);
+//	@Query("UPDATE UserDetails p SET p.paymentStatus = :newPaymentStatus WHERE p.userId = :userId")
+	@Query("UPDATE UserDetails p SET p.paymentStatus = :newPaymentStatus, p.paidAmount = :paidAmount WHERE p.userId = :userId")
+	void updateByUserId(Long userId, String newPaymentStatus,double paidAmount);
 	 
 //	  @Query("SELECT u FROM UserDetails u WHERE u.email = :email")
 	    UserDetails findByEmail(String email);

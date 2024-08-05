@@ -1,6 +1,7 @@
 package com.hostel.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,8 +42,8 @@ public class PaymentController {
 
     @GetMapping("/getPaymentStatus")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN', 'ROLE_SUPERVISOR','ROLE_USER')")
-    public ResponseEntity<String> getPaymentStatus(@RequestParam("paymentId") String paymentId, @RequestParam("userId") String userId){
-        return ResponseEntity.ok((paymentService.getPaymentStatus(paymentId, userId)).toString());
+    public ResponseEntity<Map<String, String>> getPaymentStatus(@RequestParam("paymentId") String paymentId, @RequestParam("userId") String userId){
+        return ResponseEntity.ok((paymentService.getPaymentStatus(paymentId, userId)));
     }
     
     @GetMapping("/all")
