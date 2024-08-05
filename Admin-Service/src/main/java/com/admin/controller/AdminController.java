@@ -1,6 +1,9 @@
 package com.admin.controller;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,12 +92,33 @@ public class AdminController {
 	    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN', 'ROLE_SUPERVISOR')")
 	    public ResponseEntity<UserDetailsResponseDto> patchUserDetails(@PathVariable long userId, @RequestBody Map<String, Object> updates) {
 	        try {
+	        	 if (updates.containsKey("paymentETA")) {
+	                  String paymentETAString = (String) updates.get("paymentETA");
+	                  Date paymentETA = parseDate(paymentETAString);
+	                  updates.put("paymentETA", paymentETA);
+	              }
+
+	              // Convert string to boolean if necessary
+	              if (updates.containsKey("status")) {
+	                  String statusString = (String) updates.get("status");
+	                  boolean status = Boolean.parseBoolean(statusString);
+	                  updates.put("status", status);
+	              }
 	            UserDetailsResponseDto updatedUser = adminService.patchUserDetails(userId, updates);
 	            return ResponseEntity.ok(updatedUser);
 	        }catch (Exception e) {
 				System.out.println(e);
 			}
 			return null;
+	    }
+	    
+	    private Date parseDate(String dateStr) {
+	        try {
+	            return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(dateStr);
+	        } catch (ParseException e) {
+	            e.printStackTrace();
+	            return null;
+	        }
 	    }
 	    
 	    @PostMapping("/validate-mobile-numbers")
