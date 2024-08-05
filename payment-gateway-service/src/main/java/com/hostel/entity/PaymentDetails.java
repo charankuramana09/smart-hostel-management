@@ -23,4 +23,6 @@ public class PaymentDetails extends BaseModel{
     private PaymentStatus status;
     private double amount;
     private LocalDate paymentDate;
+    private String userName; 
+    private String phone;
 }

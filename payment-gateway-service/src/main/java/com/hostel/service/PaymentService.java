@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hostel.dto.PaymentLinkRequestDto;
@@ -34,21 +33,27 @@ public class PaymentService {
 
     public String createLink(String userId, String userName, String phone, double amount) {
         logger.info("Creating payment link for userId: {}", userId);
+        logger.info("Received Data - userId: {}, userName: {}, phone: {}, amount: {}", userId, userName, phone, amount);
 
         PaymentLinkRequestDto paymentLinkRequestDto = new PaymentLinkRequestDto();
-        paymentLinkRequestDto.setUserName(userName); // Use dynamic user name
-        paymentLinkRequestDto.setUserId(userId); // Use dynamic user ID
-        paymentLinkRequestDto.setPhone(phone); // Use dynamic phone number
-        paymentLinkRequestDto.setAmount(amount); // Use dynamic amount
+        paymentLinkRequestDto.setUserName(userName);
+        paymentLinkRequestDto.setUserId(userId);
+        paymentLinkRequestDto.setPhone(phone);
+        paymentLinkRequestDto.setAmount(amount);
 
         String paymentLink = paymentGateway.createPaymentLink(paymentLinkRequestDto);
 
         PaymentDetails paymentResponse = new PaymentDetails();
         paymentResponse.setPaymentLink(paymentLink);
         paymentResponse.setUserId(userId);
-        paymentRepository.save(paymentResponse);
+        paymentResponse.setUserName(userName);  // Set userName
+        paymentResponse.setPhone(phone);        // Set phone
+        paymentResponse.setAmount(amount);      // Set amount
         paymentResponse.setStatus(PaymentStatus.PENDING); 
         paymentResponse.setPaymentDate(LocalDate.now());
+
+        logger.info("Saving PaymentDetails: {}", paymentResponse);
+        paymentRepository.save(paymentResponse);
 
         logger.info("Payment link created and saved: {}", paymentLink);
         return paymentLink;
@@ -79,12 +84,16 @@ public class PaymentService {
         logger.info("Fetching all payment details");
 
         return paymentRepository.findAll().stream().map(payment -> {
+            logger.info("Processing payment: " + payment); // Log the payment entity
+
             PaymentLinkRequestDto dto = new PaymentLinkRequestDto();
             dto.setUserId(payment.getUserId());
-            dto.setUserName("dummyUserName"); // Set actual value if available
-            dto.setPhone("dummyPhone"); // Set actual value if available
+            dto.setUserName(payment.getUserName()); // Set actual value
+            dto.setPhone(payment.getPhone()); // Set actual value
             dto.setAmount(payment.getAmount());
             dto.setPaymentDate(payment.getPaymentDate());
+
+            logger.info("Mapped DTO: " + dto); // Log the DTO
             return dto;
         }).collect(Collectors.toList());
     }
