@@ -38,9 +38,9 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests()
-				 .requestMatchers("/complaint/raiseTicket","/complaint/findById/*","/complaint/patch/*","/user/save","/user/getId/*","/user/update/*","/user/updatePaymentStatus","/user/patch","/user/getUserData/*","/user/getUserDataBoolean/*")
+				 .requestMatchers("/complaint/raiseTicket","/complaint/findById/*","/user/save","/user/getId/*","/user/update/*","/user/updatePaymentStatus","/user/patch","/user/getUserData/*","/user/getUserDataBoolean/*")
 				 .hasAnyRole(Authorities.USER.name())
-				 .requestMatchers("/complaint/findById/*","/complaint/all","/user/update","/user/patch","/complaint/patch")
+				 .requestMatchers("/complaint/findById/*","/complaint/all","/user/update","/user/patch","/complaint/patch/*")
 				 .hasAnyRole(Authorities.ADMIN.name(), Authorities.SUPERVISOR.name(), Authorities.SUPERADMIN.name())
 				.anyRequest()
 				.authenticated()
