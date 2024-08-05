@@ -150,7 +150,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		if(roomSharing.equalsIgnoreCase("1 Sharing")){
 			if(paidAmount==7000) {
 				userDetails.setPaidAmount(paidAmount);
-			}else {
+			}else if(paidAmount>7000) {
+				Double advanceAmount=paidAmount-7000;
+				userDetails.setPaidAmount(paidAmount);
+				userDetails.setPendingAmount(0);
+				userDetails.setAdvancePayment(advanceAmount);
+			}
+			else {
 				Double pendingAmount=7000-paidAmount;
 				userDetails.setPaidAmount(paidAmount);
 				userDetails.setPendingAmount(pendingAmount);
@@ -158,6 +164,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}else if(roomSharing.equalsIgnoreCase("2 Sharing")){
 			if(paidAmount==6000) {
 				userDetails.setPaidAmount(paidAmount);
+			}else if(paidAmount>6000) {
+				Double advanceAmount=paidAmount-6000;
+				userDetails.setPaidAmount(paidAmount);
+				userDetails.setPendingAmount(0);
+				userDetails.setAdvancePayment(advanceAmount);
 			}else {
 				Double pendingAmount=6000-paidAmount;
 				userDetails.setPaidAmount(paidAmount);
@@ -166,6 +177,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}else if(roomSharing.equalsIgnoreCase("3 Sharing")){
 			if(paidAmount==5000) {
 				userDetails.setPaidAmount(paidAmount);
+			}else if(paidAmount>5000) {
+				Double advanceAmount=paidAmount-5000;
+				userDetails.setPaidAmount(paidAmount);
+				userDetails.setPendingAmount(0);
+				userDetails.setAdvancePayment(advanceAmount);
 			}else {
 				Double pendingAmount=5000-paidAmount;
 				userDetails.setPaidAmount(paidAmount);
@@ -174,6 +190,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		}else if(roomSharing.equalsIgnoreCase("4 Sharing")){
 			if(paidAmount==4000) {
 				userDetails.setPaidAmount(paidAmount);
+			}else if(paidAmount>4000) {
+				Double advanceAmount=paidAmount-4000;
+				userDetails.setPaidAmount(paidAmount);
+				userDetails.setPendingAmount(0);
+				userDetails.setAdvancePayment(advanceAmount);
 			}else {
 				Double pendingAmount=4000-paidAmount;
 				userDetails.setPaidAmount(paidAmount);
