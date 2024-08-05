@@ -40,7 +40,7 @@ public class SecurityConfig {
 		http.csrf().disable().authorizeRequests()
 				 .requestMatchers("/complaint/raiseTicket","/complaint/findById/*","/complaint/patch/*","/user/save","/user/getId/*","/user/update/*","/user/updatePaymentStatus","/user/patch","/user/getUserData/*","/user/getUserDataBoolean/*")
 				 .hasAnyRole(Authorities.USER.name())
-				 .requestMatchers("/complaint/findById/*","/user/update","/user/patch","/complaint/patch")
+				 .requestMatchers("/complaint/findById/*","/complaint/all","/user/update","/user/patch","/complaint/patch")
 				 .hasAnyRole(Authorities.ADMIN.name(), Authorities.SUPERVISOR.name(), Authorities.SUPERADMIN.name())
 				.anyRequest()
 				.authenticated()

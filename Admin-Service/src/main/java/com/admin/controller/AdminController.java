@@ -96,7 +96,7 @@ public class AdminController {
 			return null;
 	    }
 	    
-	    @GetMapping("/validate-mobile-numbers")
+	    @PostMapping("/validate-mobile-numbers")
 	    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN', 'ROLE_SUPERVISOR')")
 	    public Map<String, Object> validateMobileNumbers(@RequestBody List<Long> mobileNumbers) {
 	        return adminService.validateMobileNumbers(mobileNumbers);

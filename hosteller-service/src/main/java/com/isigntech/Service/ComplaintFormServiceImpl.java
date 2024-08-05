@@ -1,7 +1,9 @@
 package com.isigntech.Service;
 
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +88,13 @@ public class ComplaintFormServiceImpl implements ComplaintFormService {
         return dto;
     }
 	
-
+    public List<ComplaintFormResponseDTO> getAll() {
+        List<ComplaintForm> complaints = complaintFormRepository.findAll();
+        // Convert ComplaintForm entities to ComplaintFormResponseDTOs
+        System.out.println("list of complanuts "+ complaints.size());
+        return complaints.stream()
+                         .map(this::mapToDto)
+                         .collect(Collectors.toList());
+    }
 
 }

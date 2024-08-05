@@ -1,6 +1,7 @@
 package com.isigntech.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +64,12 @@ public class ComplaintFormController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+	@GetMapping("/all")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN', 'ROLE_SUPERVISOR','ROLE_USER')")
+	ResponseEntity<List<ComplaintFormResponseDTO>> getAllComplaints() {
+	    
+	    List<ComplaintFormResponseDTO> complaints = complaintFormService.getAll();
+	    return new ResponseEntity<>(complaints, HttpStatus.OK);
+	}
 	 
 }

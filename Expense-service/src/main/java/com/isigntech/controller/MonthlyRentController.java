@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/monthly")
@@ -21,8 +23,10 @@ public class MonthlyRentController {
     private MonthlyRentService monthlyRentService;
 
     @PostMapping("/submit")
-    public ResponseEntity<String> submitMonthlyRent(@ModelAttribute MonthlyRentDto monthlyRentDTO) {
+    public ResponseEntity<Map<String, String>> submitMonthlyRent(@ModelAttribute MonthlyRentDto monthlyRentDTO) {
         monthlyRentService.saveMonthlyRent(monthlyRentDTO);
-        return new ResponseEntity<>("Monthly Rent submitted successfully", HttpStatus.CREATED);
+        Map<String,String> map=new HashMap<String, String>();
+        map.put("update", "Monthly Rent submitted successfully");
+        return ResponseEntity.ok(map);
     }
 }
