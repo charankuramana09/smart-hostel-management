@@ -3,6 +3,9 @@ package com.admin.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -98,7 +101,6 @@ public class AdminController {
 	                  updates.put("paymentETA", paymentETA);
 	              }
 
-	              // Convert string to boolean if necessary
 	              if (updates.containsKey("status")) {
 	                  String statusString = (String) updates.get("status");
 	                  boolean status = Boolean.parseBoolean(statusString);
@@ -112,10 +114,13 @@ public class AdminController {
 			return null;
 	    }
 	    
-	    private Date parseDate(String dateStr) {
+	    private Date parseDate(String dateString) {
 	        try {
-	            return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(dateStr);
-	        } catch (ParseException e) {
+	            DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+	            ZonedDateTime zonedDateTime = ZonedDateTime.parse(dateString, formatter);
+	            return Date.from(zonedDateTime.toInstant());
+	        } catch (DateTimeParseException e) {
+	            // Handle parse exception
 	            e.printStackTrace();
 	            return null;
 	        }
