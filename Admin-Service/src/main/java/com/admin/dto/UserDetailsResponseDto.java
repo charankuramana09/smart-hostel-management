@@ -39,6 +39,7 @@ public class UserDetailsResponseDto {
 	Date paymentETA;
 	int roomNumber;
 	String roomType;
+	private String paymentStatus;
 
 	
 

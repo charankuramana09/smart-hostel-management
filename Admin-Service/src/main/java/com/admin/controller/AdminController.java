@@ -68,6 +68,7 @@ public class AdminController {
 	                map.put("paymentETA", userDetails.getPaymentETA());
 	                map.put("roomNumber", userDetails.getRoomNumber());
 	                map.put("roomType", userDetails.getRoomType());
+	                map.put("paymentStatus", userDetails.getPaymentStatus());
 	                return map;
 	            })
 	            .collect(Collectors.toList());
