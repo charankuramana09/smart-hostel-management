@@ -1,6 +1,12 @@
 package com.admin.controller;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +74,7 @@ public class AdminController {
 	                map.put("paymentETA", userDetails.getPaymentETA());
 	                map.put("roomNumber", userDetails.getRoomNumber());
 	                map.put("roomType", userDetails.getRoomType());
+	                map.put("paymentStatus", userDetails.getPaymentStatus());
 	                return map;
 	            })
 	            .collect(Collectors.toList());
@@ -88,12 +95,35 @@ public class AdminController {
 	    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_SUPERADMIN', 'ROLE_SUPERVISOR')")
 	    public ResponseEntity<UserDetailsResponseDto> patchUserDetails(@PathVariable long userId, @RequestBody Map<String, Object> updates) {
 	        try {
+	        	 if (updates.containsKey("paymentETA")) {
+	                  String paymentETAString = (String) updates.get("paymentETA");
+	                  Date paymentETA = parseDate(paymentETAString);
+	                  updates.put("paymentETA", paymentETA);
+	              }
+
+	              if (updates.containsKey("status")) {
+	                  String statusString = (String) updates.get("status");
+	                  boolean status = Boolean.parseBoolean(statusString);
+	                  updates.put("status", status);
+	              }
 	            UserDetailsResponseDto updatedUser = adminService.patchUserDetails(userId, updates);
 	            return ResponseEntity.ok(updatedUser);
 	        }catch (Exception e) {
 				System.out.println(e);
 			}
 			return null;
+	    }
+	    
+	    private Date parseDate(String dateString) {
+	        try {
+	            DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+	            ZonedDateTime zonedDateTime = ZonedDateTime.parse(dateString, formatter);
+	            return Date.from(zonedDateTime.toInstant());
+	        } catch (DateTimeParseException e) {
+	            // Handle parse exception
+	            e.printStackTrace();
+	            return null;
+	        }
 	    }
 	    
 	    @PostMapping("/validate-mobile-numbers")

@@ -36,7 +36,7 @@ public class UserDetails {
 	@Lob
 	@Column(name = "id_proof", columnDefinition = "LONGBLOB")
 	private byte[] idProof;
-	private boolean status;
+	private boolean status=true;
 	private double paidAmount;
 	private double pendingAmount;
 	private double advancePayment;

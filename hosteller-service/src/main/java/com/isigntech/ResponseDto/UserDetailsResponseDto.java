@@ -21,7 +21,7 @@ public class UserDetailsResponseDto {
 	String email;
 	
 	byte[] idProof;
-	boolean status;
+	boolean status=true;
 	double paidAmount;
 	double pendingAmount;
 	double advancePayment;

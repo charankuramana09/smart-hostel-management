@@ -1,7 +1,9 @@
 package com.hostel.service;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -59,7 +61,7 @@ public class PaymentService {
         return paymentLink;
     }
 
-    public PaymentStatus getPaymentStatus(String paymentId, String userId) {
+    public Map<String, String> getPaymentStatus(String paymentId, String userId) {
         logger.info("Fetching payment status for paymentId: {}, userId: {}", paymentId, userId);
 
         Optional<PaymentDetails> paymentDetails = paymentRepository.findByUserId(userId);
@@ -75,9 +77,15 @@ public class PaymentService {
         paymentResponse.setStatus(status);
         paymentResponse.setPaymentId(paymentId);
         paymentRepository.save(paymentResponse);
-
         logger.info("Payment status updated: {}", status);
-        return status;
+        
+        Map<String,String> map=new HashMap();
+        map.put("status", status.toString());
+        if(status!=null) {
+        map.put("paymentAmount", ""+paymentDetails.get().getAmount());
+        }
+        
+        return map;
     }
     
     public List<PaymentLinkRequestDto> getAllPaymentDetails() {
